@@ -51,10 +51,10 @@ function __makePS1() {
 
     if [ -n "${SSH_CONNECTION}" -o ${USER} = root ]; then
         if [ ${USER} = root ]; then
-            PS1+="\[${BOLD_RED}\]@\h\[${COLOR_OFF}\]" # host displayed red when root
+            PS1+="${BOLD_RED}@%m${COLOR_OFF}" # host displayed red when root
         else
-            PS1+="\[${BOLD_GREEN}\]@"
-            PS1+="\[${HOST_COLOR}\]\h\[${COLOR_OFF}\]" # host displayed only if ssh connection
+            PS1+="${BOLD_GREEN}@"
+            PS1+="${HOST_COLOR}%m${COLOR_OFF}" # host displayed only if ssh connection
         fi
     fi
 
@@ -62,10 +62,7 @@ function __makePS1() {
     PS1+=":${BOLD_BLUE}%~${COLOR_OFF}"
 
     # background jobs
-    local NO_JOBS=`jobs -p | wc -l`
-    if [ ${NO_JOBS} != 0 ]; then
-        PS1+=" ${GREEN}[j${NO_JOBS}]${COLOR_OFF}"
-    fi
+    PS1+="${GREEN}%(1j. [%j].)${COLOR_OFF}"
 
     # git branch
     if [ $GIT_AVAILABLE = "1" ] && [ $GIT = "1" ]; then
@@ -85,7 +82,7 @@ function __makePS1() {
     fi
 
     # exit code
-    PS1+=" ${BOLD_RED}%(?..[!%?])${COLOR_OFF}"
+    PS1+="${BOLD_RED}%(?.. [!%?])${COLOR_OFF}"
 
     # prompt
     if [ ${USER} = root ]; then
@@ -93,7 +90,7 @@ function __makePS1() {
     elif [ ${USER} != ${LNAME} ]; then
         PS1+=" ${BOLD_BLUE}\$${COLOR_OFF} " # normal user but not login
     else
-        PS1+="${BOLD_GREEN}\$${COLOR_OFF} " # normal user
+        PS1+=" ${BOLD_GREEN}\$${COLOR_OFF} " # normal user
     fi
 
 }
