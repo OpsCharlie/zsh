@@ -159,10 +159,12 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+
 # aliases
 if [ -f ~/.zsh_aliases ]; then
     . ~/.zsh_aliases
 fi
+
 
 # history
 HISTSIZE=2000
@@ -174,6 +176,7 @@ setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
 HISTFILE=${HOME}/.zsh_history
 HISTORY_IGNORE='&:[ ]*:exit:ls:bg:fg:history:clear'
+
 
 # set login name
 if ! logname &>/dev/null; then
@@ -207,6 +210,43 @@ else
     GIT=1
 fi
 
+
+# enable/disable tmux loading
+[[ ${USER} = root ]] && EN_TMUX=0 || EN_TMUX=1
+command -v tmux &>/dev/null || EN_TMUX=0
+
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+
+# enable tmux and start session
+if [ $EN_TMUX -eq 1 ]; then
+    ## TMUX
+    #if which tmux >/dev/null 2>&1; then
+    #    #if not inside a tmux session, and if no session is started, start a new session
+    #    test -z "$TMUX" && (tmux attach || tmux new-session)
+    #fi
+
+    if [ -z "$TMUX" ]; then
+        # Create a new session if it doesn't exist
+        tmux has-session -t $base_session || tmux new-session -d -s $base_session
+        # Are there any clients connected already?
+        client_cnt=$(tmux list-clients | wc -l)
+        if [ $client_cnt -ge 1 ]; then
+            session_name=$base_session"-"$client_cnt
+            tmux new-session -d -t $base_session -s $session_name
+            tmux -2 attach-session -t $session_name \; set-option destroy-unattached
+        else
+            tmux -2 attach-session -t $base_session
+        fi
+    fi
+fi
+
+
+### main
 function preexec() {
   timer_start
 }
