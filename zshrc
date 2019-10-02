@@ -121,7 +121,7 @@ zstyle ':completion:*' matcher-list '' \
 autoload bashcompinit
 bashcompinit
 export -f _have() { which $@ >/dev/null }
-[[ -d /usr/share/bash-completion/completions/lxc ]] && source /usr/share/bash-completion/completions/lxc
+[[ -e /usr/share/bash-completion/completions/lxc ]] && source /usr/share/bash-completion/completions/lxc
 
 
 
