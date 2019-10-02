@@ -117,6 +117,14 @@ zstyle ':completion:*' matcher-list '' \
   'r:|?=** m:{a-z\-}={A-Z\_}'
 
 
+# Command completion bash compatible
+autoload bashcompinit
+bashcompinit
+export -f _have() { which $@ >/dev/null }
+source /usr/share/bash-completion/completions/lxc
+
+
+
 # History search
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
