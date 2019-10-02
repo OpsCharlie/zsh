@@ -254,6 +254,10 @@ if [ $EN_TMUX -eq 1 ]; then
 fi
 
 
+# keybinding
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+
 ### main
 function preexec() {
   timer_start
