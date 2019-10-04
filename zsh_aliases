@@ -27,6 +27,16 @@ alias less0='LESSOPEN= /usr/bin/less'
 
 alias mmount="mount | /bin/grep -E '^/dev'"
 
+if [ -x /usr/bin/dircolors ]; then
+    alias less='less -R'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
 # function checks if the application is installed
 function __add_command_replace_alias() {
     if [ -x "$(which $2 2>&1)" ]; then
@@ -34,7 +44,6 @@ function __add_command_replace_alias() {
     fi
 }
 
-__add_command_replace_alias less 'less -R'
 __add_command_replace_alias tail 'multitail'
 __add_command_replace_alias df 'pydf'
 __add_command_replace_alias traceroute 'mtr'
