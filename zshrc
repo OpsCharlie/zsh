@@ -115,6 +115,9 @@ export LESS_TERMCAP_ue=$'\e[0m'           # end underline
 export LESS_TERMCAP_us=$'\e[04;38;5;146m' # begin underline
 
 
+# use /usr/share/zsh/site-functions for zsh-completions
+fpath=($fpath /usr/share/zsh/site-functions)
+
 # Command completion
 autoload -Uz compinit
 compinit
@@ -133,7 +136,6 @@ autoload bashcompinit
 bashcompinit
 export -f _have() { which $@ >/dev/null }
 [[ -e /usr/share/bash-completion/completions/lxc.zsh ]] && source /usr/share/bash-completion/completions/lxc.zsh &>/dev/null
-
 
 
 # History search
