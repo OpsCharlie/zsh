@@ -115,6 +115,7 @@ export LESS_TERMCAP_ue=$'\e[0m'           # end underline
 export LESS_TERMCAP_us=$'\e[04;38;5;146m' # begin underline
 
 
+### completions
 # use /usr/share/zsh/site-functions for zsh-completions
 fpath=($fpath /usr/share/zsh/site-functions)
 
@@ -136,6 +137,32 @@ autoload bashcompinit
 bashcompinit
 export -f _have() { which $@ >/dev/null }
 [[ -e /usr/share/bash-completion/completions/lxc.zsh ]] && source /usr/share/bash-completion/completions/lxc.zsh &>/dev/null
+
+
+# command not found
+[[ -e /etc/zsh_command_not_found ]] && source /etc/zsh_command_not_found
+
+
+# Easily prefix your current or previous commands with sudo by pressing [esc] twice
+sudo-command-line() {
+    [[ -z $BUFFER ]] && zle up-history
+    if [[ $BUFFER == sudo\ * ]]; then
+        LBUFFER="${LBUFFER#sudo }"
+    elif [[ $BUFFER == $EDITOR\ * ]]; then
+        LBUFFER="${LBUFFER#$EDITOR }"
+        LBUFFER="sudoedit $LBUFFER"
+    elif [[ $BUFFER == sudoedit\ * ]]; then
+        LBUFFER="${LBUFFER#sudoedit }"
+        LBUFFER="$EDITOR $LBUFFER"
+    else
+        LBUFFER="sudo $LBUFFER"
+    fi
+}
+zle -N sudo-command-line
+# Defined shortcut keys: [Esc] [Esc]
+bindkey -M emacs '\e\e' sudo-command-line
+bindkey -M vicmd '\e\e' sudo-command-line
+bindkey -M viins '\e\e' sudo-command-line
 
 
 # History search
