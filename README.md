@@ -14,8 +14,8 @@ Features:
 The most convenient way of installation is to checkout the repository and symlink the relevant scripts.
 Assuming the installation in home directory:
 ```bash
-git clone git@github.com:Charlietje/zsh.git
-cd bash
+git clone git@github.com:OpsCharlie/zsh.git
+cd zsh
 ./__deploy.sh
 or
 ./__deploy.sh username@host
