@@ -209,8 +209,8 @@ fi
 
 
 # history
-HISTSIZE=2000
-SAVEHIST=4000
+HISTSIZE=65535
+SAVEHIST=65535
 setopt APPEND_HISTORY
 setopt SHARE_HISTORY
 setopt EXTENDED_HISTORY
@@ -237,7 +237,7 @@ fi
 command -v tmux &>/dev/null || EN_TMUX=0
 
 
-# If not running interactively, don't do anything
+# If not running interactively, do not do anything
 [ -z "$PS1" ] && return
 
 
@@ -273,7 +273,7 @@ if [ $EN_TMUX -eq 1 ]; then
     #fi
 
     if [ -z "$TMUX" ]; then
-        # Create a new session if it doesn't exist
+        # Create a new session if it does not exist
         tmux has-session -t $base_session || tmux new-session -d -s $base_session
         # Are there any clients connected already?
         client_cnt=$(tmux list-clients | wc -l)
@@ -303,3 +303,5 @@ function precmd() {
 }
 
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
