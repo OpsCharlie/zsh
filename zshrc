@@ -316,3 +316,4 @@ fi
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/venv/3.12.3/bin/activate ] && source ~/venv/3.12.3/bin/activate
