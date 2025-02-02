@@ -264,6 +264,14 @@ if [ -z "${debian_chroot}" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 
+# Is loaded via vim
+IN_VIM=$(ps -p $PPID -o comm= | grep -qsE '[gn]?vim' && echo 1 || echo 0)
+if [ $IN_VIM -eq 1 ]; then
+    GIT=0
+    EN_TMUX=0
+fi
+
+
 # enable tmux and start session
 if [ $EN_TMUX -eq 1 ]; then
     ## TMUX
