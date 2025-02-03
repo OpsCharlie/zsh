@@ -5,14 +5,12 @@ alias ls='ls --color=auto -h'
 alias ll='ls --color=auto -h -l'
 alias la='ls --color=auto -h -la'
 alias l='ls --color=auto -h -CF'
-# alias crontab='/usr/bin/crontab -u www-data'
-alias sudo='sudo '   # use aliasses when using sudo
+alias sudo='sudo '   # use aliases when using sudo
 
 alias cd..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias a='cd ~/ansible/lxd'
-# alias s='cd ~/Notebooks/scripts/se_scripts'
 
 alias tmux='tmux -2'
 alias bc='bc -l'
@@ -25,7 +23,7 @@ alias mv='mv -v'
 
 alias less0='LESSOPEN= /usr/bin/less'
 
-alias mmount="mount | /bin/grep -E '^/dev'"
+alias mmount="mount | /bin/grep -E '^/dev' | column -t"
 
 if [ -x /usr/bin/dircolors ]; then
     alias less='less -R'
