@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 
 export __LS_OPTIONS='--color=auto -h'
 
@@ -12,12 +11,13 @@ alias sudo='sudo '   # use aliasses when using sudo
 alias cd..='cd ..'
 alias ..='cd ..'
 alias ...='cd ../..'
-alias a='cd ~/Notebooks/ansible'
-alias s='cd ~/Notebooks/scripts/se_scripts'
+alias a='cd ~/ansible/lxd'
+# alias s='cd ~/Notebooks/scripts/se_scripts'
 
 alias tmux='tmux -2'
 alias bc='bc -l'
 alias gh='history | grep '
+alias gd='git fetch -p ; git branch -r | awk '\''{print $1}'\'' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '\''{print $1}'\'' | xargs git branch -D'
 
 alias mkdir='mkdir -p -v'
 alias mv='mv -v'
@@ -50,6 +50,7 @@ __add_command_replace_alias traceroute 'mtr'
 __add_command_replace_alias tracepath 'mtr'
 __add_command_replace_alias top 'htop'
 __add_command_replace_alias fd 'fdfind'
+__add_command_replace_alias vim 'nvim'
 
 # alias goaccess 'goaccess -o report.html --real-time-html'
 # alias unityrestart='DISPLAY=:0 unity --replace'

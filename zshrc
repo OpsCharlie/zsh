@@ -61,6 +61,11 @@ function __makePS1() {
     # working directory
     PS1+=":${BOLD_BLUE}%~${COLOR_OFF}"
 
+    # python env
+    if [[ -v VIRTUAL_ENV ]]; then
+      PS1+=" ${YELLOW}(${VIRTUAL_ENV##*/})${COLOR_OFF}"
+    fi
+
     # background jobs
     PS1+="${GREEN}%(1j. [%j].)${COLOR_OFF}"
 
@@ -322,10 +327,18 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/venv/3.12.3/bin/activate ] && source ~/venv/3.12.3/bin/activate
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# set local bin in path
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# remove duplicate entries
+PATH="$(perl -e 'print join(":", grep { not $seen{$_}++  } split(/:/, $ENV{PATH}))')"
+export PATH
