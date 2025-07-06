@@ -1,14 +1,14 @@
 
-function timer_now {
+function fn_timer_now {
     date +%s%N
 }
 
-function timer_start {
-    timer_start=${timer_start:-$(timer_now)}
+function fn_timer_start {
+    timer_start=${timer_start:-$(fn_timer_now)}
 }
 
 function timer_stop {
-    local delta_us=$((($(timer_now) - $timer_start) / 1000))
+    local delta_us=$((($(fn_timer_now) - $timer_start) / 1000))
     local us=$((delta_us % 1000))
     local ms=$(((delta_us / 1000) % 1000))
     local s=$(((delta_us / 1000000) % 60))
@@ -71,7 +71,7 @@ function __makePS1() {
 
     # git branch
     if [ $GIT_AVAILABLE = "1" ] && [ $GIT = "1" ]; then
-        local branch="$(git branch 2>/dev/null | grep '^*' | colrm 1 2)"
+        local branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
 
         if [ -n "${branch}" ]; then
             local git_status="$(git status --porcelain -b 2>/dev/null)"
@@ -115,7 +115,7 @@ export LESS_TERMCAP_md=$'\e[01;38;5;74m'  # begin bold
 export LESS_TERMCAP_me=$'\e[0m'           # end mode
 export LESS_TERMCAP_se=$'\e[0m'           # end standout-mode
 export LESS_TERMCAP_so=$'\e[38;5;246m'    # begin standout-mode - info box
-export LESS_TERMCAP_so=$'\e[30;43m'
+# export LESS_TERMCAP_so=$'\e[30;43m'
 export LESS_TERMCAP_ue=$'\e[0m'           # end underline
 export LESS_TERMCAP_us=$'\e[04;38;5;146m' # begin underline
 
@@ -234,7 +234,7 @@ fi
 
 
 # is git available
-[[ -x "$(which git 2>&1)" ]] && GIT_AVAILABLE=1 || GIT_AVAILABLE=0
+[[ -x "$(command -v git 2>&1)" ]] && GIT_AVAILABLE=1 || GIT_AVAILABLE=0
 
 
 # enable/disable tmux loading
@@ -307,11 +307,11 @@ bindkey "^[[1;5D" backward-word
 
 ### main
 function preexec() {
-  timer_start
+  fn_timer_start
 }
 
 function precmd() {
-    if [ ! $timer_start ]; then timer_start; fi
+    if [ ! $timer_start ]; then fn_timer_start; fi
     __makePS1
 }
 
@@ -326,22 +326,19 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/venv/3.12.3/bin/activate ] && source ~/venv/3.12.3/bin/activate
-
-
-[ -f "$HOME/venv/3.12/bin/activate" ] && source "$HOME/venv/3.12/bin/activate"
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # set local bin in path
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+[ -f ~/venv/3.12.3/bin/activate ] && source ~/venv/3.12.3/bin/activate
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # remove duplicate entries
-PATH="$(perl -e 'print join(":", grep { not $seen{$_}++  } split(/:/, $ENV{PATH}))')"
+PATH="$(awk -v RS=: '!a[$1]++{if(NR>1)printf ":";printf $1}' <<< "$PATH")"
 export PATH
