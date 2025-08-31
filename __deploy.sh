@@ -3,7 +3,7 @@
 P=$1
 DIR=$(dirname $(readlink -f $0))
 
-if [ -z $P ]; then
+if [ -z "$P" ]; then
     echo Copying files to homedir
     mv ~/.zshrc ~/.zshrc.bak
     mv ~/.zsh_aliases ~/.zsh_aliases.bak
@@ -22,11 +22,11 @@ if [ "$(expr match "$P" '.*\(:\)')" = ":" ]; then
     exit 1
 fi
 
-ssh $P "mv ~/.zshrc ~/.zshrc.bak;\
+ssh "$P" "mv ~/.zshrc ~/.zshrc.bak;\
 mv ~/.zsh_aliases ~/.zsh_aliases.bak;\
 mv ~/.dircolors ~/.dircolors.bak"
 
-sftp $P << EOF
+sftp "$P" << EOF
 put zshrc       .zshrc
 put zsh_aliases .zsh_aliases
 put dircolors       .dircolors
