@@ -110,15 +110,34 @@ eval COLOR_OFF='%{$reset_color%}'
 
 
 # Color man-pages
-export LESS_TERMCAP_mb=$'\e[01;31m'       # begin blinking
-export LESS_TERMCAP_md=$'\e[01;38;5;74m'  # begin bold
-export LESS_TERMCAP_me=$'\e[0m'           # end mode
-export LESS_TERMCAP_se=$'\e[0m'           # end standout-mode
-export LESS_TERMCAP_so=$'\e[38;5;246m'    # begin standout-mode - info box
-# export LESS_TERMCAP_so=$'\e[30;43m'
-export LESS_TERMCAP_ue=$'\e[0m'           # end underline
-export LESS_TERMCAP_us=$'\e[04;38;5;146m' # begin underline
+export GROFF_NO_SGR=1
 
+# export LESS_TERMCAP_mb=$'\e[01;31m'       # begin blinking
+# export LESS_TERMCAP_md=$'\e[01;38;5;74m'  # begin bold
+# export LESS_TERMCAP_me=$'\e[0m'           # end mode
+# export LESS_TERMCAP_se=$'\e[0m'           # end standout-mode
+# export LESS_TERMCAP_so=$'\e[38;5;246m'    # begin standout-mode - info box
+# # export LESS_TERMCAP_so=$'\e[30;43m'
+# export LESS_TERMCAP_ue=$'\e[0m'           # end underline
+# export LESS_TERMCAP_us=$'\e[04;38;5;146m' # begin underline
+
+# Catppuccin theme
+export LESS_TERMCAP_mb=$'\e[1;38;5;204m'
+export LESS_TERMCAP_md=$'\e[1;38;2;198;160;246m'  # #c6a0f6
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[48;2;49;50;68;38;2;205;214;244m'  # bg #313244, fg #cdd6f4
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[4;38;2;116;199;236m'  # #74c7ec
+
+# Colorized theme
+# export LESS_TERMCAP_mb=$'\e[1;33m'
+# export LESS_TERMCAP_md=$'\e[1;34m'
+# export LESS_TERMCAP_me=$'\e[0m'
+# export LESS_TERMCAP_se=$'\e[0m'
+# export LESS_TERMCAP_so=$'\e[30;47m'  # or $'\e[7m' for terminal default reverse
+# export LESS_TERMCAP_ue=$'\e[0m'
+# export LESS_TERMCAP_us=$'\e[4;36m'
 
 ### completions
 # use /usr/share/zsh/site-functions for zsh-completions
