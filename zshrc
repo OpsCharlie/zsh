@@ -256,11 +256,6 @@ fi
 [[ -x "$(command -v git 2>&1)" ]] && GIT_AVAILABLE=1 || GIT_AVAILABLE=0
 
 
-# enable/disable tmux loading
-[[ ${USER} = root ]] && EN_TMUX=0 || EN_TMUX=1
-command -v tmux &>/dev/null || EN_TMUX=0
-
-
 # If not running interactively, do not do anything
 [ -z "$PS1" ] && return
 
@@ -280,12 +275,7 @@ fi
 # enable/disable tmux loading
 [[ ${USER} = root ]] && EN_TMUX=0 || EN_TMUX=1
 command -v tmux &>/dev/null || EN_TMUX=0
-
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
+[[ -z $KITTY_PID ]] || EN_TMUX=0
 
 
 # Is loaded via vim
@@ -345,10 +335,6 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-# set local bin in path
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
