@@ -266,8 +266,7 @@ fi
 # enable/disable tmux loading
 [[ ${USER} = root ]] && EN_TMUX=0 || EN_TMUX=1
 command -v tmux &>/dev/null || EN_TMUX=0
-[[ -z $KITTY_PID ]] || EN_TMUX=0
-
+[[ -f ~/.config/kitty/tab_bar.py ]] && EN_TMUX=0 || EN_TMUX=1
 
 # Is loaded via vim
 IN_VIM=$(ps -p $PPID -o comm= | grep -qsE '[gn]?vim' && echo 1 || echo 0)
