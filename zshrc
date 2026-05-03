@@ -337,8 +337,8 @@ for file in "${zsh_source_files[@]}"; do
   [[ -f $file ]] && source "$file"
 done
 
-# Configured by fzf installer
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Configure fzf completion
+command -v command -v fzf &>/dev/null && source <(fzf --zsh)
 
 
 export NVM_DIR="$HOME/.nvm"
