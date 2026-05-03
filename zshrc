@@ -368,7 +368,7 @@ for file in "${zsh_source_files[@]}"; do
 done
 
 # Configure fzf completion
-command -v command -v fzf &>/dev/null && source <(fzf --zsh)
+command -v fzf &>/dev/null && source <(fzf --zsh)
 
 # Auto-activate latest Python virtual environment
 if [[ -d ~/venv ]]; then
