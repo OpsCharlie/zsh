@@ -81,10 +81,10 @@ function __makePS1() {
             git_status=$(git status --porcelain -b 2>/dev/null)
 
             # read all lines into an array
-            mapfile -t lines <<< "$git_status"
+            lines=("${(f)git_status}")
 
-            # branch name from first line
-            first_line="${lines[0]}"
+            # branch name from first line (zsh arrays are 1-indexed)
+            first_line="${lines[1]}"
             branch="${first_line#'## '}"
             branch="${branch%%...*}"
 
@@ -122,9 +122,9 @@ function __makePS1() {
             done
 
             # append to PS1
-            PS1+=" \[${Cyan}\](${branch}"
+            PS1+=" ${CYAN}(${branch}"
             [[ -n $letters ]] && PS1+=" ${letters}"
-            PS1+=")\[${Color_Off}\]"
+            PS1+=")${COLOR_OFF}"
         fi
     fi
 
